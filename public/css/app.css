@@ -1,0 +1,38 @@
+body {
+  font-family: "Lato", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #232323;
+}
+
+nav li:last-child {
+  background: #FE5F1E;
+}
+nav li:last-child:hover {
+  color: #232323;
+}
+
+nav li a {
+  transition: all 0.3s ease-in-out;
+}
+nav li a:hover {
+  color: #FE5F1E;
+}
+
+.hero {
+  background: #F8F8F8;
+}
+
+.item-size {
+  background: #F8F8F8;
+}
+
+.btn {
+  border: 2px solid #FE5F1E;
+  color: #FE5F1E;
+  transition: all 0.3s ease-in-out;
+}
+.btn:hover {
+  border-color: #FFF;
+  background: #FE5F1E;
+  color: #FFF;
+}

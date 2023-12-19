@@ -1,0 +1,22 @@
+[+] Create directory structure
+        - Keys 
+[+] Create a NPM project and install all dependencies
+    - dependencies
+        -express
+        - ejs express-ejs-layouts
+    - Dev dependencies
+        -nodemon
+[+] Create Express server -Create a server.js file
+[+] Git setup & first commit
+[+] Install laravel mix
+    - setup js and css
+[+] Install tailwind css
+[+] Create Home page using HTML & CSS
+    -include tailwind css
+[.] Create cart page
+    -order summary section
+    -empty cart section
+
+[.] Build the register crud backend
+    --dependencies express-flash express-session dotenv
+    
