@@ -1,4 +1,6 @@
 @import "./variables";
+@import "~noty/src/noty.scss";
+@import "~noty/src/themes/mint.scss";
 body{
     font-family: 'Lato',sans-serif;
     -webkit-font-smoothing:antialiased;
@@ -25,8 +27,10 @@ nav li a{
 .item-size{
     background:$secondary;
 }
-
-.btn{
+.cart{
+    background: $secondary;
+}
+.add-to-cart{
     border: 2px solid $primary;
     color: $primary;
     transition: $smooth;
@@ -35,4 +39,33 @@ nav li a{
         background: $primary;
         color: $pure;
     }
+    &:focus{
+        outline: none;
+    }
+}
+.btn-primary{
+    background: $primary;
+    transition: $smooth;
+    color: $pure;
+    &:hover{
+        background: $primary-hover;
+    }
+    
+}
+.amount{
+    background: $primary;
+}
+
+.auth-colors{
+    color:$primary;
+    &:hover{
+        color:$secondary;
+    }
+}
+.auth-text-color-label{
+    color:$primary;
+}
+.noty_theme__mint{
+    border-radius:50px!important;
+    padding-left:8px!important;
 }
