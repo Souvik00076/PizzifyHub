@@ -4,5 +4,14 @@ const homeController=async (req,res)=>{
     res.render('home',{pizzas:pizzas})
 }
 
-
-module.exports=homeController
+const logoutController=async(req,res)=>{
+    console.log('in logout home.js line 8')
+    req.logout((error)=>{
+        res.redirect('/auth/login')
+    })
+    
+}
+module.exports={
+    homeController,
+    logoutController
+}

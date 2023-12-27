@@ -31,18 +31,19 @@
                     <span class="font-bold text-xl ml-2"><%= session.cart.totalPrice %></span>
                 </div>
                 <div class="mt-4">
-                    <form action="">
-                        <input type="text" placeholder="+91 1234567890" class="border border-gray-500 p-2 w-1/2 mb-4"> 
-                        <input type="text" placeholder="Address" class="border border-gray-500 p-2 w-1/2 mb-4">
-                                    <div>
-                            <button type="submit" class="btn-primary rounded-full px-6 py-1 font-bold">Order Now</button>
-                        </div>
-                        
-                        <div>
-                            <button type="submit" class="btn-primary rounded-full px-6 py-1 font-bold">Login To Order</button>
-                        </div>
+                    <form name="order-btn" id="order-btn" action="/<%= user._id%>/orders" method="POST">
+                        <input name="phoneNumber" type="text" placeholder="+91 1234567890" class="border border-gray-500 p-2 w-1/2 mb-4"> 
+                        <input name="address" type="text" placeholder="Address" class="border border-gray-500 p-2 w-1/2 mb-4">
+                        <% if(user) { console.log(user._id) %>
+                            <div>
+                                    <a onclick="document.getElementById('order-btn').submit()"  href="#" class="btn-primary rounded-full px-6 py-1 font-bold">Order Now</a>
+                            </div>
+                        <% } else { %> 
+                            <div>
+                                <a href="/auth/login" class="btn-primary rounded-full px-6 py-1 font-bold">Login To Order</a>
+                            </div>
+                        <% } %>
                     </form>
-    
                 </div>
             </div>
         
@@ -61,4 +62,4 @@
     
 </section>
 <% } %>
-</section>
+</section> 

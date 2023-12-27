@@ -1,6 +1,7 @@
 const express=require('express')
-const homeController = require('../app/http/controllers/Home')
+const {homeController,logoutController} = require('../app/http/controllers/Home')
 const homeRouter=express.Router()
 homeRouter.route('/').get(homeController)
+homeRouter.route('/logout').post(logoutController)
 module.exports=homeRouter
 
