@@ -1,4 +1,3 @@
-
 const itemModel=require('../../../models/Item')
 const orderModel=require('../../../models/Order')
 const userModel=require('../../../models/User')
@@ -20,10 +19,20 @@ const fetchOrders=async (req,res)=>{
                     
     if(req.xhr) return res.json(orders)
     return res.render('admin/orders')
-    
+}
+
+const getOrderStatus=async (req,res)=>{
+    const {orderId,status}=req.body
+   
+    const order=await orderModel.updateOne({_id:orderId},{status:status});
+    //emit event
+    const eventEmitter=req.app.get('eventEmitter')
+    eventEmitter.emit('orderUpdated',{orderId:orderId,status:status})
+    res.redirect('/admin/orders')
 }
 
 module.exports={
     insertAll,
-    fetchOrders
+    fetchOrders,
+    getOrderStatus
 }

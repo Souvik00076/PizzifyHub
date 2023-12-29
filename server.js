@@ -23,10 +23,10 @@ const passport=require('passport')
 const guest=require('./app/http/middleware/guest')
 const authMiddleware=require('./app/http/middleware/auth')  
 const adminMiddleware=require('./app/http/middleware/admin')
- 
+const Emitter=require('events')
+const eventEmitter=new Emitter() 
+app.set('eventEmitter',eventEmitter)
 app.use(flash())
-
-
 //session store
 const mongoStore=new mongoDbStore({
     mongoUrl:process.env.MONGO_URI,
@@ -68,15 +68,34 @@ app.use('/',homeRouter)
 app.use('/auth',guest,authRouter)
 app.use('/cart',cartRouter)
 app.use('/admin',adminMiddleware,adminRoute)
-app.use('/:id',authMiddleware,orderRouter)
+app.use('/customers/',authMiddleware,orderRouter)
 
 
 const startServer=async ()=>{
     try{
         await connectDb(process.env.MONGO_URI)
-        app.listen(PORT,console.log(`Server Started At PORT number ${PORT}`))
+        const server=app.listen(PORT,console.log(`Server Started At PORT number ${PORT}`))
+        return server
     }catch(error){
         console.log(error)
     }
 }
-startServer()
+const serverPromise=startServer()
+serverPromise
+            .then((server)=>{
+                const io=require('socket.io')(server)
+                io.on('connection',(socket)=>{
+                    socket.on('join',(room)=>{
+                        socket.join(room)
+                    })
+                })
+                eventEmitter.on('orderUpdated',(data)=>{
+                    
+                    io.to(`order_${data.orderId}`).emit('orderUpdated',data)
+                })
+                eventEmitter.on('orderPlaced',(data)=>{
+                        console.log(`here data is ${data.order}`)
+                        io.to('adminRoom').emit('orderPlaced',data.order)
+                })
+            })
+

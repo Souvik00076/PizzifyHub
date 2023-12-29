@@ -4,14 +4,12 @@ const User=require('../models/User')
 
 
 const getSessionId=async (id,done)=>{
-    console.log('in getsession')
     const user=await User.findById(id)
     if(user) return done(null,user)
 }
 
 
 const storeSessionID=(user,done)=>{
-    console.log('in store session')
     done(null,user._id)
 }
 

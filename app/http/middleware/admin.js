@@ -1,5 +1,6 @@
-const adminMiddleware=(req,res)=>{
-    if(req.isAuthenticated() && req.user.role=='admin'){
+const adminMiddleware=(req,res,next)=>{
+   
+    if(req.isAuthenticated() && req.user.role==='admin'){
         return next()
     }
     res.redirect('/')

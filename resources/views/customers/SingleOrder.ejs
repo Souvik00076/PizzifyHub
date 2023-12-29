@@ -1,0 +1,18 @@
+<section class="status">
+    <div class="container mx-auto">
+        <div class="status-box w-2/3 mx-auto">
+            <div class="flex items-center mb-12 justify-between">
+                <h1 class="text-xl font-bold">Track Status</h1>
+                <h1 class="bg-white py-1 rounded-full px-4 text-green-600 text-sm"><%= order._id%></h1>
+                <input type="hidden" id="hidden_input" value="<%= JSON.stringify(order) %>">
+            </div>
+            <ul>
+                <li class="status_line text-xl pb-16" data-status="order_placed"><span></span>Order Placed</li>
+                <li class="status_line text-xl pb-16" data-status="confirmed"><span></span>Order Confirmation</li>
+                <li class="status_line text-xl pb-16" data-status="prepared"><span></span>Preperation</li>
+                <li class="status_line text-xl pb-16" data-status="delivered"><span></span>Out For Delivery</li>
+                <li class="status_line text-xl" data-status="completed"><span></span>Complete</li>
+            </ul>
+        </div>
+    </div>
+</section>

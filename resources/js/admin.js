@@ -1,8 +1,48 @@
 import axios from 'axios'
 import moment from 'moment'
+import Noty from 'noty'
 
 export function initAdmin(){
+    const orderTableBody=document.querySelector('#order-table-body')
+    let orders=[]
+    let markup
+
+    const socket=io()
+    const pathName=window.location.pathname
+    if(pathName.includes('admin')){
+    socket.emit('join','adminRoom')
+    }
     
+    socket.on('orderPlaced',(data)=>{
+    console.log('called in admin socket')
+    new Noty({
+        type:'success',
+        timeout:1000,
+        text: 'New Order Arrived',
+        progressBar:false
+      }).show();
+      //unshift opposite of push
+      orders.unshift(data)
+      orderTableBody.innerHTML=''
+      orderTableBody.innerHTML=generateMarkup(orders)
+    })   
+
+    axios
+        .get('/admin/orders',{
+            headers:{
+                "X-Requested-With":"XMLHttpRequest"
+            }
+        })
+        .then(res=>{
+            orders=res.data
+            if(Array.isArray(orders)){
+            markup=generateMarkup(orders)
+            orderTableBody.innerHTML=markup
+            }
+        })
+        .catch(error=>{
+            console.log(error)
+        })
     const renderItems=(items)=>{
         let parsedItems = Object.values(items)
         return parsedItems.map((menuItem) => {
@@ -66,22 +106,5 @@ export function initAdmin(){
         }).join('')
     }
 
-    const orderTableBody=document.querySelector('#order-table-body')
-    let orders=[]
-    let markup=undefined
-    axios
-        .get('/admin/orders',{
-            headers:{
-                "X-Requested-With":"XMLHttpRequest"
-            }
-        })
-        .then(res=>{
-            orders=res.data
-            markup=generateMarkup(orders)
-            orderTableBody.innerHTML=markup
-        })
-        .catch(error=>{
-            console.log(error)
-        })
 }
 

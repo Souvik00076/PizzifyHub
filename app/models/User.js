@@ -16,6 +16,10 @@ const userSchema=new mongoose.Schema({
         type:String,
         minLength:3,
         required:[true,"Password cannot be empty"]
+    },
+    role:{
+        type:String,
+        default:'Customer'
     }
 },{timestamps:true})
 
