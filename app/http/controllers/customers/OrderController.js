@@ -22,9 +22,9 @@ const placeOrderController=async (req,res)=>{
     req.flash('success','Orders placed successfully!!')
     res.render('customers/order',{orders:orders,moment:moment})
 }
-const viewOrderController=(req,res)=>{
-    console.log("in viewOrderController")
-    res.render('customers/order')
+const viewOrderController=async (req,res)=>{
+    const orders=await orderItems(req,res)
+    res.render('customers/order',{orders:orders,moment:moment})
 }
 
 const orderItems=async(req,res)=>{

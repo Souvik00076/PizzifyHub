@@ -1,3 +1,4 @@
+require('express-async-errors')
 const express=require('express')
 const app=express()
 var bodyParser = require('body-parser');
@@ -12,7 +13,7 @@ const flash=require('express-flash')
 const viewsPath=path.join(__dirname,'/resources/views')
 require('dotenv').config()
 app.use(cookieParser())
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(expressLayouts)
 app.set('views',viewsPath)
@@ -27,12 +28,13 @@ const Emitter=require('events')
 const eventEmitter=new Emitter() 
 app.set('eventEmitter',eventEmitter)
 app.use(flash())
+const ErrorHandler=require('./app/http/middleware/ErrorHandler')
+const notFoundHandler=require('./app/http/middleware/NotFound')
 //session store
 const mongoStore=new mongoDbStore({
     mongoUrl:process.env.MONGO_URI,
     collection:'sessions'
 })
-
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,      
@@ -46,11 +48,6 @@ const passportInit=require('./app/config/passport')
 passportInit(passport)
 app.use(passport.initialize())
 app.use(passport.session())
-
-
-
-
-
 //global middleware
 app.use((req,res,next)=>{  
     res.locals.session=req.session
@@ -69,8 +66,8 @@ app.use('/auth',guest,authRouter)
 app.use('/cart',cartRouter)
 app.use('/admin',adminMiddleware,adminRoute)
 app.use('/customers/',authMiddleware,orderRouter)
-
-
+app.use(ErrorHandler)
+app.use(notFoundHandler)
 const startServer=async ()=>{
     try{
         await connectDb(process.env.MONGO_URI)
